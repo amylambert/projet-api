@@ -22,8 +22,9 @@ public final class AuteurMapper {
         Auteur auteur = new Auteur();
         auteur.setId(null);
         auteur.setNom(request.getNom());
-        auteur.setNationalite(request.getNationalite());
         auteur.setPrenom(request.getPrenom());
+        auteur.setNationalite(request.getNationalite());
+
         return auteur;
     }
 
