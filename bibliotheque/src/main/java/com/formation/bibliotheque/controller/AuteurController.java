@@ -5,6 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.formation.bibliotheque.model.Auteur;
+import com.formation.bibliotheque.service.AuteurService;
+
 @RestController
 @RequestMapping("/api/v1/auteurs")
 public class AuteurController {
