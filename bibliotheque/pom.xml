@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.formation</groupId>
-	<artifactId>api-rest-demo</artifactId>
+	<artifactId>bibliotheque</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>api-rest-demo</name>
+	<name>bibliotheque</name>
 	<description/>
 	<url/>
 	<licenses>
