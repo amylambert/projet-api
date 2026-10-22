@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.formation.bibliotheque.model.Auteur;
 import com.formation.bibliotheque.service.AuteurService;
+import com.formation.bibliotheque.dto.AuteurResponse;
+import com.formation.bibliotheque.dto.AuteurRequest;
 
 @RestController
 @RequestMapping("/api/v1/auteurs")
