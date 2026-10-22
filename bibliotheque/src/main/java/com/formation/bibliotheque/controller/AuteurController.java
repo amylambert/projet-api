@@ -1,5 +1,8 @@
+import com.formation.bibliotheque.mapper.AuteurMapper;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,7 +66,7 @@ public class AuteurController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AuteurResponse> mettreAJour(@PathVariable Long id, @Valid @RequestBody AuteurRequesst request) {
+    public ResponseEntity<AuteurResponse> mettreAJour(@PathVariable Long id, @Valid @RequestBody AuteurRequest request) {
         if (!auteurService.existe(id)) {
             return ResponseEntity.notFound().build(); // 404
         }
