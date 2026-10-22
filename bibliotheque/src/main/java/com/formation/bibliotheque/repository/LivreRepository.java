@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 @Repository
-public interface ProduitRepository extends JpaRepository<Livre, Long> {
+public interface LivreRepository extends JpaRepository<Livre, Long> {
 
     Optional<Livre> findByIsbn(String isbn); // le livre qui a cet ISBN
 
