@@ -28,7 +28,7 @@ public class AuteurController {
     public ResponseEntity<PagedModel<AuteurResponse>> listerTous(
             @PageableDefault(size = 10, sort = "nom") Pageable pageable) {
         Page<Auteur> page = auteurService.recupererTous(pageable);
-        return ResponseEntity.ok(AuteurMapperversPage(page)); // 200
+        return ResponseEntity.ok(AuteurMapper::versPage(page)); // 200
     }
 
     // Endpoint 5 — DELETE /api/v1/auteurs/{id} : deux vérifications, puis l'action
