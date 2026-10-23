@@ -32,7 +32,7 @@ public final class LivreMapper {
     }
 
     public static LivreResponse versResponse(Livre livre){
-        LivreResponse response = new LivreResponse(
+        return new LivreResponse(
                 livre.getId(),
                 livre.getTitre(),
                 livre.getIsbn(),
@@ -41,7 +41,6 @@ public final class LivreMapper {
                 livre.getStock(),
                 livre.getAuteurId()
         );
-        return response;
     }
 
     public static List<LivreResponse> versResponses(List<Livre> livres){
