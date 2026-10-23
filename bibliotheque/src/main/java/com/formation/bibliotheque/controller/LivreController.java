@@ -24,6 +24,7 @@ public class LivreController {
     public LivreController(LivreService livreService) {
         this.livreService = livreService;
     }
+
     // EndPoint 7
     @GetMapping
     public ResponseEntity<PagedModel<LivreResponse>> listerTous(
@@ -42,6 +43,7 @@ public class LivreController {
         Livre livre = resultat.get();
         return ResponseEntity.ok(LivreMapper.versResponse(livre));
     }
+
     // EndPoint 9
     @PostMapping
     public ResponseEntity<LivreResponse> creer(@Valid @RequestBody LivreRequest request) {
@@ -54,25 +56,26 @@ public class LivreController {
         }
         // 2. Agir
         Livre nouveauLivre = LivreMapper.versEntite(request);
-        Livre LivreSauvegarde = livreService.creer(nouveauLivre);
+        Livre livreSauvegarde = livreService.creer(nouveauLivre);
         // 3. Répondre
         return ResponseEntity.status(HttpStatus.CREATED).body(LivreMapper.versResponse(livreSauvegarde));
     }
+
     // EndPoint 10
     @PutMapping("/{id}")
-        public ResponseEntity<LivreResponse> mettreAJour(
-                @PathVariable Long id,
-                @Valid @RequestBody LivreRequest request) {
+    public ResponseEntity<LivreResponse> mettreAJour(
+            @PathVariable Long id,
+            @Valid @RequestBody LivreRequest request) {
 
-            if (livreService.existe(id)) {
-                return ResponseEntity.notFound().build(); // 404
-            }
-            if (!livreService.auteurExiste(request.getAuteurId())) {
-                return ResponseEntity.badRequest().build(); // 400
-            }
-            if (livreService.isbnUtiliseParUnAutreLivre(request.getIsbn(), id)) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).build(); // 409
-            }
+        if (livreService.existe(id)) {
+            return ResponseEntity.notFound().build(); // 404
+        }
+        if (!livreService.auteurExiste(request.getAuteurId())) {
+            return ResponseEntity.badRequest().build(); // 400
+        }
+        if (livreService.isbnUtiliseParUnAutreLivre(request.getIsbn(), id)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build(); // 409
+        }
         Optional<Livre> resultat = livreService.recupererParId(id);
         Livre livreExistant = resultat.get();
         Livre nouvellesValeurs = LivreMapper.versEntite(request);
@@ -80,50 +83,51 @@ public class LivreController {
 
         return ResponseEntity.ok(LivreMapper.versResponse(livreMisAJour));
 
-        }
+    }
 
     // EndPoint 11
     @DeleteMapping("/{id}")
-        public ResponseEntity<Void> supprimer(@PathVariable Long id) {
-            Optional<Livre> resultat = livreService.recupererParId(id);
-            if (resultat.isEmpty()){
-                return ResponseEntity.notFound().build(); //404
-            }
-            livreService.supprimer(id);
-            return ResponseEntity.noContent().build(); // 204
+    public ResponseEntity<Void> supprimer(@PathVariable Long id) {
+        Optional<Livre> resultat = livreService.recupererParId(id);
+        if (resultat.isEmpty()) {
+            return ResponseEntity.notFound().build(); //404
         }
+        livreService.supprimer(id);
+        return ResponseEntity.noContent().build(); // 204
+    }
+
     // EndPoint 12
     @GetMapping("/recherche")
-        public ResponseEntity<PagedModel<LivreResponse>> rechercher(
-                @RequestParam String titre,
-                @PageableDefault(size = 10, sort = "titre") Pageable pageable) {
-            // Appeler le service pour chercher les livres
-            Page<Livre> page = livreService.rechercherParTitre(titre, pageable);
+    public ResponseEntity<PagedModel<LivreResponse>> rechercher(
+            @RequestParam String titre,
+            @PageableDefault(size = 10, sort = "titre") Pageable pageable) {
+        // Appeler le service pour chercher les livres
+        Page<Livre> page = livreService.rechercherParTitre(titre, pageable);
 
-            return ResponseEntity.ok(LivreMapper.versPage(page));
-        }
+        return ResponseEntity.ok(LivreMapper.versPage(page));
+    }
+
     // EndPoint 13
     @GetMapping("/disponibles")
-        public ResponseEntity<PagedModel<LivreResponse>> listerDisponibles(
-                @PageableDefault(size = 10, sort = "titre") Pageable pageable) {
-            Page<Livre> page = livreService.recupererDisponibles(pageable);
-            return ResponseEntity.ok(LivreMapper.versPage(page));
-        }
+    public ResponseEntity<PagedModel<LivreResponse>> listerDisponibles(
+            @PageableDefault(size = 10, sort = "titre") Pageable pageable) {
+        Page<Livre> page = livreService.recupererDisponibles(pageable);
+        return ResponseEntity.ok(LivreMapper.versPage(page));
     }
+
 
     // EndPoint 14
     @PatchMapping("/{id}/stock")
     public ResponseEntity<LivreResponse> ajouterStock(
             @PathVariable Long id,
             @RequestParam Integer quantite) {
-        Optional<Livre> quantite = livreService.recupererParId(id)
-        if (quantite <= 0){
+        Optional<Livre> resultat = livreService.recupererParId(id);
+        if (quantite <= 0) {
             return ResponseEntity.badRequest().build(); //400
         }
         if (!livreService.existe(id)) {
             return ResponseEntity.notFound().build(); // 404
         }
-        Optional<Livre> resultat = livreService.recupererParId(id);
         Livre livre = resultat.get();
         Livre livreMisAJour = livreService.ajouterStock(livre, quantite);
 
