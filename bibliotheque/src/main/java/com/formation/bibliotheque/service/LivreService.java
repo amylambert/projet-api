@@ -1,23 +1,23 @@
+package com.formation.bibliotheque.service;
+
 import java.util.Optional;
 
-import org.hibernate.query.Page;
-import org.springframework.boot.data.autoconfigure.web.DataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.formation.bibliotheque.model.Livre;
-import com.formation.bibliotheque.repository.livreRepository;
+import com.formation.bibliotheque.repository.AuteurRepository;
 import com.formation.bibliotheque.repository.LivreRepository;
 
 @Service
 public class LivreService {
-    private final livreService livreService;
     private final LivreRepository livreRepository;
-    private final livreRepository livreRepository;
+    private final AuteurRepository auteurRepository;
 
-    public LivreService(LivreRepository livreRepository, livreRepository livreRepository, livreService livreService) {
+    public LivreService(LivreRepository livreRepository, AuteurRepository auteurRepository) {
         this.livreRepository = livreRepository;
-        this.livreRepository = livreRepository;
-        this.livreService = livreService;
+        this.auteurRepository = auteurRepository;
     }
 
     public Page<Livre> recupererTous(Pageable pageable) {
@@ -25,34 +25,25 @@ public class LivreService {
     }
 
     public Optional<Livre> recupererParId(Long id) {
-        livreRepository.findById(id);
+        return livreRepository.findById(id);
     }
 
     public boolean existe(Long id) {
-        if (livreRepository.findById(id)) {
-            return true;
-        }
-        return false;
+        return livreRepository.existsById(id);
     }
 
-    public boolean livreExiste(Long livreId) {
-        if (livreService.existe(livreId)) {
-            return true;
-        }
-        return false;
+    public boolean AuteurExiste(Long auteurId) {
+        return auteurRepository.existsById(auteurId);
     }
 
     public boolean isbnExiste(String isbn) {
-        if (livreRepository.findByIsbn(isbn)) {
-            return true;
-        }
-        return false;
+        return livreRepository.findByIsbn(isbn) != null;
     }
 
     public boolean isbnUtiliseParUnAutreLivre(String isbn, Long idLivre) {
-        Livre livre = livreRepository.findByIsbn(isbn);
-        if ( isbn == livre.getIsbn()) {
-            if ( idLivre != livre.getId()) {
+        Optional<Livre> livre = livreRepository.findByIsbn(isbn);
+        if (livre.isPresent()) {
+            if (idLivre != livre.get().getId()) {
                 return true;
             }
         }
@@ -65,29 +56,32 @@ public class LivreService {
     }
 
     Livre mettreAJour(Livre livreExistant, Livre nouvellesValeurs) {
-        return livreRepository.map(livreExistant -> {
-                livreExistant.setNom(nouvellesValeurs.getNom());
-                livreExistant.setDescription(nouvellesValeurs.getDescription());
-                livreExistant.setPrix(nouvellesValeurs.getPrix());
-                livreExistant.setStock(nouvellesValeurs.getStock());
-                return livreRepository.save(livreExistant);
-            }
-        );
+        livreExistant.setTitre(nouvellesValeurs.getTitre());
+        livreExistant.setIsbn(nouvellesValeurs.getIsbn());
+        livreExistant.setPrix(nouvellesValeurs.getPrix());
+        livreExistant.setStock(nouvellesValeurs.getStock());
+        livreExistant.setAuteurId(nouvellesValeurs.getAuteurId());
+        livreExistant.setAnneePublication(nouvellesValeurs.getAnneePublication());
+        return livreRepository.save(livreExistant);
     }
 
     void supprimer(Long id) {
-        livreRepository.delete(livreRepository.findById(id));
+        Optional<Livre> livre = livreRepository.findById(id);
+        if (livre.isPresent()) {
+            livreRepository.delete(livre.get());
+        }
     }
 
     Page<Livre> rechercherParTitre(String titre, Pageable pageable) {
-        
+        return livreRepository.findByTitreContainingIgnoreCase(titre, pageable);
     }
 
     Page<Livre> recupererDisponibles(Pageable pageable) {
-
+        return livreRepository.findByStockGreaterThan(0, pageable);
     }
 
     Livre ajouterStock(Livre livre, Integer quantite) {
-
+        livre.setStock(livre.getStock() + quantite);
+        return livreRepository.save(livre);
     }
 }

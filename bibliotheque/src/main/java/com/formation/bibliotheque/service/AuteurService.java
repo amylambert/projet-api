@@ -1,7 +1,9 @@
+package com.formation.bibliotheque.service;
+
 import java.util.Optional;
 
-import org.hibernate.query.Page;
-import org.springframework.boot.data.autoconfigure.web.DataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.formation.bibliotheque.model.Auteur;
@@ -10,7 +12,6 @@ import com.formation.bibliotheque.repository.LivreRepository;
 
 @Service
 public class AuteurService {
-    private final LivreService livreService;
     private final AuteurRepository auteurRepository;
     private final LivreRepository livreRepository;
 
@@ -31,14 +32,15 @@ public class AuteurService {
     * @return Optional vide si le auteur n'existe pas.
     */
     public Optional<Auteur> recupererParId(Long id) {
-        auteurRepository.findById(id);
+        return auteurRepository.findById(id);
     }
 
     /**
     * @return True si l'id correspond à un auteur dans la table
     */
     public boolean existe(Long id) {
-        if (auteurRepository.findById(id)) {
+        Optional<Auteur> existe = auteurRepository.findById(id);
+        if (existe != null) {
             return true;
         }
         return false;
@@ -63,14 +65,10 @@ public class AuteurService {
     pas.
     */
     public Auteur mettreAJour(Auteur auteurExistant, Auteur nouvellesValeurs) {
-        return auteurRepository.map(auteurExistant -> {
-                auteurExistant.setNom(nouvellesValeurs.getNom());
-                auteurExistant.setDescription(nouvellesValeurs.getDescription());
-                auteurExistant.setPrix(nouvellesValeurs.getPrix());
-                auteurExistant.setStock(nouvellesValeurs.getStock());
-                return auteurRepository.save(auteurExistant);
-            }
-        );
+        auteurExistant.setNom(nouvellesValeurs.getNom());
+        auteurExistant.setPrenom(nouvellesValeurs.getPrenom());
+        auteurExistant.setNationalite(nouvellesValeurs.getNationalite());
+        return auteurRepository.save(auteurExistant);
     }
 
     /**
