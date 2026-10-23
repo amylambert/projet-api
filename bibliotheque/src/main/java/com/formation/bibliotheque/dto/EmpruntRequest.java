@@ -37,6 +37,10 @@ public class EmpruntRequest {
     @NotNull(message = "Le statut de rendu ne peut pas être null")
     private Boolean rendu;
 
+    @NotBlank(message = "Le statut de retard est obligatoire")
+    @NotNull(message = "Le statut de retard ne peut pas être null")
+    private Boolean enRetard;
+
     // Getters et setters
 
     public Long getId() { return id; }
@@ -62,4 +66,7 @@ public class EmpruntRequest {
 
     public Boolean getRendu() { return rendu; }
     public void setRendu(Boolean rendu) { this.rendu = rendu; }
+
+    public Boolean getEnRetard() { return enRetard; }
+    public void setEnRetard(Boolean enRetard) { this.enRetard = enRetard; }
 }

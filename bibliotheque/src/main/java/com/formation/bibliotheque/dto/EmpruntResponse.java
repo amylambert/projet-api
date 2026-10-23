@@ -11,8 +11,9 @@ public class EmpruntResponse {
     private LocalDate dateRetourPrevue;
     private LocalDate dateRetourEffective;
     private Boolean rendu;
+    private Boolean enRetard;
 
-    public EmpruntResponse(Long id, Long livreId, String emprunteur, LocalDate dateEmprunt, LocalDate dateRetourPrevue, LocalDate dateRetourEffective, Boolean rendu) {
+    public EmpruntResponse(Long id, Long livreId, String emprunteur, LocalDate dateEmprunt, LocalDate dateRetourPrevue, LocalDate dateRetourEffective, Boolean rendu, Boolean enRetard) {
         this.id = id;
         this.livreId = livreId;
         this.emprunteur = emprunteur;
@@ -20,6 +21,7 @@ public class EmpruntResponse {
         this.dateRetourPrevue = dateRetourPrevue;
         this.dateRetourEffective = dateRetourEffective;
         this.rendu = rendu;
+        this.enRetard = enRetard;
     }
 
     public Long getId() { return id; }
@@ -29,4 +31,5 @@ public class EmpruntResponse {
     public LocalDate getDateRetourPrevue() { return dateRetourPrevue; }
     public LocalDate getDateRetourEffective() { return dateRetourEffective; }
     public Boolean getRendu() { return rendu; }
+    public Boolean getEnRetard() { return enRetard; }
 }
