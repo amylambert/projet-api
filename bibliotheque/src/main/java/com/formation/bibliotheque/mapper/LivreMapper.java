@@ -1,14 +1,15 @@
 package com.formation.bibliotheque.mapper;
 
-import com.formation.bibliotheque.model.Livre;
-import com.formation.bibliotheque.dto.LivreResponse;
-import com.formation.bibliotheque.dto.LivreRequest;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PagedModel;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.formation.bibliotheque.dto.LivreRequest;
+import com.formation.bibliotheque.dto.LivreResponse;
+import com.formation.bibliotheque.model.Livre;
 
 /**
  * Convertit les objets des couches DTO à entity, et inversement
@@ -35,8 +36,8 @@ public final class LivreMapper {
                 livre.getId(),
                 livre.getTitre(),
                 livre.getIsbn(),
-                livre.getPrix(),
                 livre.getAnneePublication(),
+                livre.getPrix(),
                 livre.getStock(),
                 livre.getAuteurId()
         );

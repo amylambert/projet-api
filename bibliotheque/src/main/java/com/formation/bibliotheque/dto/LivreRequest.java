@@ -14,11 +14,11 @@ public class LivreRequest {
     @NotNull(message = "L'isbn ne peut pas être null")
     private String isbn;
 
+    private int anneePublication;
+
     @NotBlank(message = "Le prix est obligatoire")
     @NotNull(message = "Le prix ne peut pas être null")
     private Double prix;
-
-    private int anneePublication;
 
     @NotBlank(message = "Le stock est obligatoire")
     @NotNull(message = "Le stock ne peut pas être null")

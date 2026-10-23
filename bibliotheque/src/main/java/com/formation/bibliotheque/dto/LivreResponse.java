@@ -5,8 +5,8 @@ public class LivreResponse {
     private Long id;
     private String titre;
     private String isbn;
-    private Double prix;
     private int anneePublication;
+    private Double prix;
     private Integer stock;
     private Long auteurId;
 
