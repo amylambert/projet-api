@@ -1,3 +1,5 @@
+package com.formation.bibliotheque.controller;
+
 import com.formation.bibliotheque.mapper.AuteurMapper;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -50,7 +52,7 @@ public class AuteurController {
     @GetMapping("/{id}")
     public ResponseEntity<AuteurResponse> obtenirParId(@PathVariable Long id) {
         return auteurService.recupererParId(id)
-                .map(AuteurMapper.versResponse)
+                .map(AuteurMapper::versResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -68,12 +70,13 @@ public class AuteurController {
     @PutMapping("/{id}")
     public ResponseEntity<AuteurResponse> mettreAJour(@PathVariable Long id, @Valid @RequestBody AuteurRequest request) {
         if (!auteurService.existe(id)) {
-            return ResponseEntity.notFound().build(); // 404
+            return ResponseEntity.notFound().build();
         }
-        Auteur entite = AuteurMapper.versEntite(request);
-        return auteurService.mettreAJour(id, entite)
+        Auteur entiteModifiee = AuteurMapper.versEntite(request);
+        return auteurService.recupererParId(id)
+                .map(auteur -> auteurService.mettreAJour(auteur, entiteModifiee))
                 .map(AuteurMapper::versResponse)
-                .map(ResponseEntity.ok)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 }
