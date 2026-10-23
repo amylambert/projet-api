@@ -36,7 +36,7 @@ public class EmpruntController {
     @GetMapping("/{id}")
     public ResponseEntity<EmpruntResponse> obtenirParId(@PathVariable Long id) {
         return empruntService.recupererParId(id)
-                .map(EmpruntMapper.versResponse)
+                .map(EmpruntMapper::versResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
