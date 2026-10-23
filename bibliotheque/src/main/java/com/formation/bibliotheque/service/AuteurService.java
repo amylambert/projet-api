@@ -15,7 +15,7 @@ public class AuteurService {
     private final AuteurRepository auteurRepository;
     private final LivreRepository livreRepository;
 
-    public AuteurService(AuteurRepository auteurRepository, LivreRepository livreRepository, LivreService livreService) {
+    public auteurService(AuteurRepository auteurRepository, LivreRepository livreRepository, LivreService livreService) {
         this.auteurRepository = auteurRepository;
         this.livreRepository = livreRepository;
     }

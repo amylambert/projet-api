@@ -25,19 +25,19 @@ public class EmpruntService {
         this.livreRepository = livreRepository;
     }
     
-    Page<Emprunt> recupererTous(Pageable pageable) {
+    public Page<Emprunt> recupererTous(Pageable pageable) {
         return empruntRepository.findAll(pageable);
     }
 
-    Optional<Emprunt>recupererParId(Long id) {
+    public Optional<Emprunt>recupererParId(Long id) {
         return empruntRepository.findById(id);
     }
 
-    boolean livreExiste(Long livreId) {
+    public boolean livreExiste(Long livreId) {
         return livreRepository.existsById(livreId);
     }
 
-    boolean livreDisponible(Long livreId) {
+    public boolean livreDisponible(Long livreId) {
         Optional<Livre> livre = livreRepository.findById(livreId);
         if (livre.isPresent() && livre.get().getStock() > 0) {
             return true;
@@ -45,7 +45,7 @@ public class EmpruntService {
         return false;
     }
 
-    Emprunt creer(Emprunt emprunt) {
+    public Emprunt creer(Emprunt emprunt) {
         emprunt.setId(null);
         emprunt.setDateRetourPrevue(LocalDate.now().plusDays(DUREE_MAX_JOURS));
         emprunt.setDateRetourEffective(null);
@@ -56,7 +56,7 @@ public class EmpruntService {
         return empruntRepository.save(emprunt);
     }
 
-    Emprunt retourner(Emprunt emprunt) {
+    public Emprunt retourner(Emprunt emprunt) {
         emprunt.setRendu(true);
         emprunt.setDateRetourEffective(LocalDate.now());
 
@@ -68,11 +68,11 @@ public class EmpruntService {
         return empruntRepository.save(emprunt);
     }
 
-    Page<Emprunt> recupererEnCours(Pageable pageable) {
+    public Page<Emprunt> recupererEnCours(Pageable pageable) {
         return empruntRepository.findByRenduFalse(pageable);
     }
 
-    Page<Emprunt> recupererEnRetard(Pageable pageable) {
+    public Page<Emprunt> recupererEnRetard(Pageable pageable) {
         return empruntRepository.findByRenduFalseAndDateRetourPrevueBefore(LocalDate.now(), pageable);
     }
 }

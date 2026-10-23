@@ -50,12 +50,12 @@ public class LivreService {
         return false;
     }
 
-    Livre creer(Livre livre) {
+    public Livre creer(Livre livre) {
         livre.setId(null);
         return livreRepository.save(livre);
     }
 
-    Livre mettreAJour(Livre livreExistant, Livre nouvellesValeurs) {
+    public Livre mettreAJour(Livre livreExistant, Livre nouvellesValeurs) {
         livreExistant.setTitre(nouvellesValeurs.getTitre());
         livreExistant.setIsbn(nouvellesValeurs.getIsbn());
         livreExistant.setPrix(nouvellesValeurs.getPrix());
@@ -65,22 +65,22 @@ public class LivreService {
         return livreRepository.save(livreExistant);
     }
 
-    void supprimer(Long id) {
+    public void supprimer(Long id) {
         Optional<Livre> livre = livreRepository.findById(id);
         if (livre.isPresent()) {
             livreRepository.delete(livre.get());
         }
     }
 
-    Page<Livre> rechercherParTitre(String titre, Pageable pageable) {
+    public Page<Livre> rechercherParTitre(String titre, Pageable pageable) {
         return livreRepository.findByTitreContainingIgnoreCase(titre, pageable);
     }
 
-    Page<Livre> recupererDisponibles(Pageable pageable) {
+    public Page<Livre> recupererDisponibles(Pageable pageable) {
         return livreRepository.findByStockGreaterThan(0, pageable);
     }
 
-    Livre ajouterStock(Livre livre, Integer quantite) {
+    public Livre ajouterStock(Livre livre, Integer quantite) {
         livre.setStock(livre.getStock() + quantite);
         return livreRepository.save(livre);
     }
