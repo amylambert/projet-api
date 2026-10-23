@@ -32,7 +32,7 @@ public class LivreService {
         return livreRepository.existsById(id);
     }
 
-    public boolean AuteurExiste(Long auteurId) {
+    public boolean auteurExiste(Long auteurId) {
         return auteurRepository.existsById(auteurId);
     }
 
