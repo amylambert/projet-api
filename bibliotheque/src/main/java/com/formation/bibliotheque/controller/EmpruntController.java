@@ -16,6 +16,8 @@ import com.formation.bibliotheque.dto.EmpruntResponse;
 import com.formation.bibliotheque.mapper.EmpruntMapper;
 import com.formation.bibliotheque.dto.EmpruntRequest;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/v1/emprunts")
 public class EmpruntController {
@@ -44,6 +46,9 @@ public class EmpruntController {
     @PostMapping
     public ResponseEntity<EmpruntResponse> creer(@Valid @RequestBody EmpruntRequest request) {
         Emprunt entite = EmpruntMapper.versEntite(request);
+        if(!empruntService.livreDisponible(entite.getLivreId())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
         Emprunt empruntCree = empruntService.creer(entite);
         EmpruntResponse response = EmpruntMapper.versResponse(empruntCree);
         return ResponseEntity
@@ -53,8 +58,18 @@ public class EmpruntController {
 
     @PatchMapping("/{id}/retour")
     public ResponseEntity<EmpruntResponse> retourner(@PathVariable Long id) {
-        return empruntService.recupererParId(id)
-                .map(empruntService::retourner)
+
+        Optional<Emprunt> optionalEmprunt = empruntService.recupererParId(id);
+
+        if (optionalEmprunt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Emprunt emprunt = optionalEmprunt.get();
+        if (emprunt.getRendu()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        return empruntService.recupererParId(id).map(empruntService::retourner)
                 .map(EmpruntMapper::versResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -62,14 +77,14 @@ public class EmpruntController {
 
     @GetMapping("/en-cours")
     public ResponseEntity<PagedModel<EmpruntResponse>> listerEnCours(
-            @PageableDefault(size = 10, sort="dateEmprunt") Pageable pageable) {
+            @PageableDefault(size = 10, sort = "dateEmprunt") Pageable pageable) {
         Page<Emprunt> page = empruntService.recupererEnCours(pageable);
         return ResponseEntity.ok(EmpruntMapper.versPage(page));
     }
 
     @GetMapping("/en-retard")
     public ResponseEntity<PagedModel<EmpruntResponse>> listerEnRetard(
-            @PageableDefault(size = 10, sort="dateEmprunt") Pageable pageable) {
+            @PageableDefault(size = 10, sort = "dateEmprunt") Pageable pageable) {
         Page<Emprunt> page = empruntService.recupererEnRetard(pageable);
         return ResponseEntity.ok(EmpruntMapper.versPage(page));
     }

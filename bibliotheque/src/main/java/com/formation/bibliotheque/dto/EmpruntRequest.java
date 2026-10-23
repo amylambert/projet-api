@@ -19,10 +19,6 @@ public class EmpruntRequest {
     @NotNull(message = "L'email de l'emprunteur ne peut pas être null")
     private String emailEmprunteur;
 
-    @NotBlank(message = "Le statut de retard est obligatoire")
-    @NotNull(message = "Le statut de retard ne peut pas être null")
-    private Boolean enRetard;
-
     // Getters et setters
 
     public Long getLivreId() { return livreId; }
@@ -34,9 +30,4 @@ public class EmpruntRequest {
     public String getEmailEmprunteur() { return emailEmprunteur; }
     public void setEmailEmprunteur(String emailEmprunteur) { this.emailEmprunteur = emailEmprunteur; }
 
-    public Boolean getRendu() { return rendu; }
-    public void setRendu(Boolean rendu) { this.rendu = rendu; }
-
-    public Boolean getEnRetard() { return enRetard; }
-    public void setEnRetard(Boolean enRetard) { this.enRetard = enRetard; }
 }
