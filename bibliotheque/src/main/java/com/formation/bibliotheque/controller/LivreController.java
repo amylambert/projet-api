@@ -67,7 +67,7 @@ public class LivreController {
             @PathVariable Long id,
             @Valid @RequestBody LivreRequest request) {
 
-        if (livreService.existe(id)) {
+        if (!livreService.existe(id)) {
             return ResponseEntity.notFound().build(); // 404
         }
         if (!livreService.auteurExiste(request.getAuteurId())) {

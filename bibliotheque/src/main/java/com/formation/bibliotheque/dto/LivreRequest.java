@@ -16,15 +16,12 @@ public class LivreRequest {
 
     private int anneePublication;
 
-    @NotBlank(message = "Le prix est obligatoire")
     @NotNull(message = "Le prix ne peut pas être null")
     private Double prix;
 
-    @NotBlank(message = "Le stock est obligatoire")
     @NotNull(message = "Le stock ne peut pas être null")
     private Integer stock;
 
-    @NotBlank(message = "L'id de l'auteur est obligatoire")
     @NotNull(message = "L'id de l'auteur ne peut pas être null")
     @Positive(message = "L'id de l'auteur doit être positif")
     private Long auteurId;
