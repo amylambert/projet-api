@@ -14,19 +14,8 @@ public class AuteurResponse {
         this.nationalite = nationalite;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public String getNationalite() {
-        return nationalite;
-    }
+    public Long getId() { return id; }
+    public String getNom() { return nom; }
+    public String getPrenom() { return prenom; }
+    public String getNationalite() { return nationalite; }
 }
