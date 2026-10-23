@@ -49,6 +49,7 @@ public class EmpruntService {
         emprunt.setId(null);
         emprunt.setDateRetourPrevue(LocalDate.now().plusDays(DUREE_MAX_JOURS));
         emprunt.setDateRetourEffective(null);
+        emprunt.setDateEmprunt(LocalDate.now());
         emprunt.setRendu(false);
         Livre livre = livreRepository.findById(emprunt.getLivreId()).orElse(null);
         livre.setStock(livre.getStock() - 1);
