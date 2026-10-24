@@ -2,8 +2,6 @@ package com.formation.bibliotheque.model;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "auteurs")
