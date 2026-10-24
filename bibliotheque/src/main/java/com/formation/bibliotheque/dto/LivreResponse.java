@@ -1,16 +1,19 @@
 package com.formation.bibliotheque.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 public class LivreResponse {
 
-    private Long id;
-    private String titre;
-    private String isbn;
-    private int anneePublication;
-    private Double prix;
-    private Integer stock;
-    private Long auteurId;
+    private final Long id;
+    private final String titre;
+    private final String isbn;
+    private final Integer anneePublication;
+    private final Double prix;
+    private final Integer stock;
+    private final Long auteurId;
 
-    public LivreResponse(Long id, String titre, String isbn, int anneePublication, Double prix, Integer stock, Long auteurId) {
+    @JsonPropertyOrder({"id", "titre", "isbn", "prix", "anneePublication", "stock", "auteurId"})
+    public LivreResponse(Long id, String titre, String isbn, Double prix, Integer anneePublication, Integer stock, Long auteurId) {
         this.id = id;
         this.titre = titre;
         this.isbn = isbn;

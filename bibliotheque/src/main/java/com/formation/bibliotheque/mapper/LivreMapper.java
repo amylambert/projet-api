@@ -36,8 +36,8 @@ public final class LivreMapper {
                 livre.getId(),
                 livre.getTitre(),
                 livre.getIsbn(),
-                livre.getAnneePublication(),
                 livre.getPrix(),
+                livre.getAnneePublication(),
                 livre.getStock(),
                 livre.getAuteurId()
         );

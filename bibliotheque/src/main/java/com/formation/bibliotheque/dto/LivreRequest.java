@@ -3,28 +3,36 @@ package com.formation.bibliotheque.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 
 public class LivreRequest {
 
     @NotBlank(message = "Le titre est obligatoire")
-    @NotNull(message = "Le titre ne peut pas être null")
+    @Size(max = 200, message = "Le titre ne doit pas dépasser 200 caractères")
     private String titre;
 
-    @NotBlank(message = "L'isbn est obligatoire")
-    @NotNull(message = "L'isbn ne peut pas être null")
+    @NotBlank(message = "L'ISBN est obligatoire")
+    @Size(max = 20, message = "L'ISBN ne doit pas dépasser 20 caractères")
     private String isbn;
 
-    private int anneePublication;
+    @Positive(message = "L'année de publication doit être positive")
+    private Integer anneePublication;
 
-    @NotNull(message = "Le prix ne peut pas être null")
+    @NotNull(message = "Le prix est obligatoire")
+    @Positive(message = "Le prix doit être positif")
     private Double prix;
 
-    @NotNull(message = "Le stock ne peut pas être null")
+    @NotNull(message = "Le stock est obligatoire")
+    @PositiveOrZero(message = "Le stock ne peut pas être négatif") // Trouvé sur internet
     private Integer stock;
 
-    @NotNull(message = "L'id de l'auteur ne peut pas être null")
-    @Positive(message = "L'id de l'auteur doit être positif")
+    @NotNull(message = "L'id de l'auteur est obligatoire")
     private Long auteurId;
+
+    public LivreRequest() {
+        // Pour Jackson
+    }
 
     // Getters et setters
 

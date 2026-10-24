@@ -37,15 +37,13 @@ public class LivreService {
     }
 
     public boolean isbnExiste(String isbn) {
-        return livreRepository.findByIsbn(isbn) != null;
+        return livreRepository.findByIsbn(isbn).isPresent();
     }
 
     public boolean isbnUtiliseParUnAutreLivre(String isbn, Long idLivre) {
         Optional<Livre> livre = livreRepository.findByIsbn(isbn);
-        if (livre.isPresent()) {
-            if (idLivre != livre.get().getId()) {
-                return true;
-            }
+        if (livre.isPresent() && !livre.get().getId().equals(idLivre)) {
+            return true;
         }
         return false;
     }

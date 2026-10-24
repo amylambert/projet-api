@@ -1,12 +1,15 @@
 package com.formation.bibliotheque.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 public class AuteurResponse {
 
-    private Long id;
-    private String nom;
-    private String prenom;
-    private String nationalite;
+    private final Long id;
+    private final String nom;
+    private final String prenom;
+    private final String nationalite;
 
+    @JsonPropertyOrder({"id", "nom", "prenom", "nationalite"})
     public AuteurResponse(Long id, String nom, String prenom, String nationalite) {
         this.id = id;
         this.nom = nom;

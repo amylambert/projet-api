@@ -2,17 +2,20 @@ package com.formation.bibliotheque.dto;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 public class EmpruntResponse {
 
-    private Long id;
-    private Long livreId;
-    private String emprunteur;
-    private LocalDate dateEmprunt;
-    private LocalDate dateRetourPrevue;
-    private LocalDate dateRetourEffective;
-    private Boolean rendu;
-    private Boolean enRetard;
+    private final Long id;
+    private final Long livreId;
+    private final String emprunteur;
+    private final LocalDate dateEmprunt;
+    private final LocalDate dateRetourPrevue;
+    private final LocalDate dateRetourEffective;
+    private final Boolean rendu;
+    private final Boolean enRetard;
 
+    @JsonPropertyOrder({"id", "livreId", "emprunteur", "dateEmprunt", "dateRetourPrevue", "dateRetourEffective", "rendu", "enRetard"})
     public EmpruntResponse(Long id, Long livreId, String emprunteur, LocalDate dateEmprunt, LocalDate dateRetourPrevue, LocalDate dateRetourEffective, Boolean rendu, Boolean enRetard) {
         this.id = id;
         this.livreId = livreId;

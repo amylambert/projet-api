@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.formation.bibliotheque.model.Auteur;
+import com.formation.bibliotheque.model.Livre;
 import com.formation.bibliotheque.repository.AuteurRepository;
 import com.formation.bibliotheque.repository.LivreRepository;
 
@@ -39,11 +40,7 @@ public class AuteurService {
     * @return True si l'id correspond à un auteur dans la table
     */
     public boolean existe(Long id) {
-        Optional<Auteur> existe = auteurRepository.findById(id);
-        if (existe != null) {
-            return true;
-        }
-        return false;
+        return auteurRepository.existsById(id);
     }
 
     /**
@@ -87,5 +84,13 @@ public class AuteurService {
     */
     public void supprimer(Long id) {
         auteurRepository.deleteById(id);
+    }
+
+    /**
+    * Récupère les livres d'un auteur par son ID.
+    * @param id L'ID de l'auteur.
+    */
+    public Page<Livre> recupererLivres(Long id, Pageable pageable) {
+        return livreRepository.findByAuteurId(id, pageable);
     }
 }
