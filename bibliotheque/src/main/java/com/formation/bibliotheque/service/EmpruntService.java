@@ -1,16 +1,16 @@
 package com.formation.bibliotheque.service;
 
-import com.formation.bibliotheque.model.Emprunt;
-import com.formation.bibliotheque.model.Livre;
-import com.formation.bibliotheque.repository.EmpruntRepository;
-import com.formation.bibliotheque.repository.LivreRepository;
-
 import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.formation.bibliotheque.model.Emprunt;
+import com.formation.bibliotheque.model.Livre;
+import com.formation.bibliotheque.repository.EmpruntRepository;
+import com.formation.bibliotheque.repository.LivreRepository;
 
 @Service
 public class EmpruntService {
@@ -46,14 +46,17 @@ public class EmpruntService {
     }
 
     public Emprunt creer(Emprunt emprunt) {
+        LocalDate aujourdhui = LocalDate.now();
         emprunt.setId(null);
-        emprunt.setDateRetourPrevue(LocalDate.now().plusDays(DUREE_MAX_JOURS));
+        emprunt.setDateEmprunt(aujourdhui);
+        emprunt.setDateRetourPrevue(aujourdhui.plusDays(DUREE_MAX_JOURS));
         emprunt.setDateRetourEffective(null);
-        emprunt.setDateEmprunt(LocalDate.now());
         emprunt.setRendu(false);
-        Livre livre = livreRepository.findById(emprunt.getLivreId()).orElse(null);
-        livre.setStock(livre.getStock() - 1);
-        livreRepository.save(livre);
+        Optional<Livre> livre = livreRepository.findById(emprunt.getLivreId());
+        if (livre.isPresent()) {
+            livre.get().setStock(livre.get().getStock() - 1);
+            livreRepository.save(livre.get());
+        }
         return empruntRepository.save(emprunt);
     }
 

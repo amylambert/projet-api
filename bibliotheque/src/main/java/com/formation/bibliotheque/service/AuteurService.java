@@ -16,7 +16,7 @@ public class AuteurService {
     private final AuteurRepository auteurRepository;
     private final LivreRepository livreRepository;
 
-    public AuteurService(AuteurRepository auteurRepository, LivreRepository livreRepository, LivreService livreService) {
+    public AuteurService(AuteurRepository auteurRepository, LivreRepository livreRepository) {
         this.auteurRepository = auteurRepository;
         this.livreRepository = livreRepository;
     }
@@ -56,10 +56,8 @@ public class AuteurService {
 
     /**
     * Met à jour un auteur existant.
-    * @param id L'ID du auteur à modifier.
     * @param nouvellesValeurs Les nouvelles valeurs.
-    * @return Optional contenant le auteur mis à jour, ou vide si l'ID n'existe
-    pas.
+    * @return L'auteur mis à jour.
     */
     public Auteur mettreAJour(Auteur auteurExistant, Auteur nouvellesValeurs) {
         auteurExistant.setNom(nouvellesValeurs.getNom());
@@ -73,10 +71,7 @@ public class AuteurService {
     * @return un boolean
     */
     public boolean aDesLivres(Long id) {
-        if (livreRepository.existsByAuteurId(id)) {
-            return true;
-        }
-        return false;
+        return livreRepository.existsByAuteurId(id);
     }
 
     /**
