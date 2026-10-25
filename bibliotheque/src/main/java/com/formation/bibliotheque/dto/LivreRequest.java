@@ -36,21 +36,51 @@ public class LivreRequest {
 
     // Getters et setters
 
-    public String getTitre() { return titre; }
-    public void setTitre(String titre) { this.titre = titre; }
+    public String getTitre() {
+        return titre;
+    }
 
-    public String getIsbn() { return isbn; }
-    public void setIsbn(String isbn) { this.isbn = isbn; }
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
 
-    public int getAnneePublication() { return anneePublication; }
-    public void setAnneePublication(int anneePublication) { this.anneePublication = anneePublication; }
+    public String getIsbn() {
+        return isbn;
+    }
 
-    public Double getPrix() { return prix; }
-    public void setPrix(Double prix) { this.prix = prix; }
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
-    public Integer getStock() { return stock; }
-    public void setStock(Integer stock) { this.stock = stock; }
+    public int getAnneePublication() {
+        return anneePublication;
+    }
 
-    public Long getAuteurId() { return auteurId; }
-    public void setAuteurId(Long auteurId) { this.auteurId = auteurId; }
+    public void setAnneePublication(int anneePublication) {
+        this.anneePublication = anneePublication;
+    }
+
+    public Double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(Double prix) {
+        this.prix = prix;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public Long getAuteurId() {
+        return auteurId;
+    }
+
+    public void setAuteurId(Long auteurId) {
+        this.auteurId = auteurId;
+    }
 }

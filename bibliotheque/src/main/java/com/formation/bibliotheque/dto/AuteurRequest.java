@@ -22,12 +22,27 @@ public class AuteurRequest {
 
     // Getters et setters
 
-    public String getNom() { return nom; }
-    public void setNom(String nom) { this.nom = nom; }
+    public String getNom() {
+        return nom;
+    }
 
-    public String getPrenom() { return prenom; }
-    public void setPrenom(String prenom) { this.prenom = prenom; }
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-    public String getNationalite() { return nationalite; }
-    public void setNationalite(String nationalite) { this.nationalite = nationalite; }
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public String getNationalite() {
+        return nationalite;
+    }
+
+    public void setNationalite(String nationalite) {
+        this.nationalite = nationalite;
+    }
 }

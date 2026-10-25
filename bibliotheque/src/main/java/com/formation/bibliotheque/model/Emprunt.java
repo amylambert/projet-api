@@ -1,7 +1,13 @@
 package com.formation.bibliotheque.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "emprunts")
@@ -32,45 +38,70 @@ public class Emprunt {
     private Boolean rendu;
 
     public Emprunt() {
+        // Constructeur par défaut requis par JPA
     }
 
     public Long getId() {
-        return id;}
+        return id;
+    }
+
     public void setId(Long id) {
-        this.id = id;}
+        this.id = id;
+    }
 
     public Long getLivreId() {
-        return livreId;}
+        return livreId;
+    }
+
     public void setLivreId(Long livreId) {
-        this.livreId = livreId;}
+        this.livreId = livreId;
+    }
 
     public String getEmprunteur() {
-        return emprunteur;}
+        return emprunteur;
+    }
+
     public void setEmprunteur(String emprunteur) {
-        this.emprunteur = emprunteur;}
+        this.emprunteur = emprunteur;
+    }
 
     public String getEmailEmprunteur() {
-        return emailEmprunteur;}
+        return emailEmprunteur;
+    }
+
     public void setEmailEmprunteur(String emailEmprunteur) {
-        this.emailEmprunteur = emailEmprunteur;}
+        this.emailEmprunteur = emailEmprunteur;
+    }
 
     public LocalDate getDateEmprunt() {
-        return dateEmprunt;}
+        return dateEmprunt;
+    }
+
     public void setDateEmprunt(LocalDate dateEmprunt) {
-        this.dateEmprunt = dateEmprunt;}
+        this.dateEmprunt = dateEmprunt;
+    }
 
     public LocalDate getDateRetourPrevue() {
-        return dateRetourPrevue;}
+        return dateRetourPrevue;
+    }
+
     public void setDateRetourPrevue(LocalDate dateRetourPrevue) {
-        this.dateRetourPrevue = dateRetourPrevue;}
+        this.dateRetourPrevue = dateRetourPrevue;
+    }
 
     public LocalDate getDateRetourEffective() {
-        return dateRetourEffective;}
+        return dateRetourEffective;
+    }
+
     public void setDateRetourEffective(LocalDate dateRetourEffective) {
-        this.dateRetourEffective = dateRetourEffective;}
+        this.dateRetourEffective = dateRetourEffective;
+    }
 
     public Boolean getRendu() {
-        return rendu;}
+        return rendu;
+    }
+
     public void setRendu(Boolean rendu) {
-        this.rendu = rendu;}
+        this.rendu = rendu;
+    }
 }

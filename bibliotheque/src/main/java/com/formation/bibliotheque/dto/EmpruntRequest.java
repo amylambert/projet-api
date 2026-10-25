@@ -24,13 +24,28 @@ public class EmpruntRequest {
 
     // Getters et setters
 
-    public Long getLivreId() { return livreId; }
-    public void setLivreId(Long livreId) { this.livreId = livreId; }
+    public Long getLivreId() {
+        return livreId;
+    }
 
-    public String getEmprunteur() { return emprunteur; }
-    public void setEmprunteur(String emprunteur) { this.emprunteur = emprunteur; }
+    public void setLivreId(Long livreId) {
+        this.livreId = livreId;
+    }
 
-    public String getEmailEmprunteur() { return emailEmprunteur; }
-    public void setEmailEmprunteur(String emailEmprunteur) { this.emailEmprunteur = emailEmprunteur; }
+    public String getEmprunteur() {
+        return emprunteur;
+    }
+
+    public void setEmprunteur(String emprunteur) {
+        this.emprunteur = emprunteur;
+    }
+
+    public String getEmailEmprunteur() {
+        return emailEmprunteur;
+    }
+
+    public void setEmailEmprunteur(String emailEmprunteur) {
+        this.emailEmprunteur = emailEmprunteur;
+    }
 
 }

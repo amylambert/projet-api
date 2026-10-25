@@ -23,4 +23,3 @@ public interface LivreRepository extends JpaRepository<Livre, Long> {
     Page<Livre> findByStockGreaterThan(Integer stock, Pageable pageable);
 
 }
- 

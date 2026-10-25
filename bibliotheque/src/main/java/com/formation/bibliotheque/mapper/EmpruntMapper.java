@@ -44,11 +44,10 @@ public final class EmpruntMapper {
                 emprunt.getDateRetourPrevue(),
                 emprunt.getDateRetourEffective(),
                 emprunt.getRendu(),
-                enRetard
-        );
+                enRetard);
     }
 
-    public static List<EmpruntResponse> versResponses(List<Emprunt> emprunts){
+    public static List<EmpruntResponse> versResponses(List<Emprunt> emprunts) {
         List<EmpruntResponse> responses = new ArrayList<>();
         for (Emprunt emprunt : emprunts) {
             responses.add(versResponse(emprunt));

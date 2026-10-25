@@ -33,8 +33,7 @@ public final class AuteurMapper {
                 auteur.getId(),
                 auteur.getNom(),
                 auteur.getPrenom(),
-                auteur.getNationalite()
-        );
+                auteur.getNationalite());
         return response;
     }
 

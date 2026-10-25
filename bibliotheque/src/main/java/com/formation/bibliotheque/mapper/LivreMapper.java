@@ -16,9 +16,10 @@ import com.formation.bibliotheque.model.Livre;
  * Logique de transformation
  */
 public final class LivreMapper {
-    private LivreMapper() {}
+    private LivreMapper() {
+    }
 
-    public static Livre versEntite(LivreRequest request){
+    public static Livre versEntite(LivreRequest request) {
         Livre livre = new Livre();
         livre.setAuteurId(request.getAuteurId());
         livre.setId(null);
@@ -31,7 +32,7 @@ public final class LivreMapper {
         return livre;
     }
 
-    public static LivreResponse versResponse(Livre livre){
+    public static LivreResponse versResponse(Livre livre) {
         return new LivreResponse(
                 livre.getId(),
                 livre.getTitre(),
@@ -39,13 +40,12 @@ public final class LivreMapper {
                 livre.getPrix(),
                 livre.getAnneePublication(),
                 livre.getStock(),
-                livre.getAuteurId()
-        );
+                livre.getAuteurId());
     }
 
-    public static List<LivreResponse> versResponses(List<Livre> livres){
+    public static List<LivreResponse> versResponses(List<Livre> livres) {
         List<LivreResponse> responses = new ArrayList<>();
-        for(Livre livre : livres){
+        for (Livre livre : livres) {
             responses.add(versResponse(livre));
         }
         return responses;

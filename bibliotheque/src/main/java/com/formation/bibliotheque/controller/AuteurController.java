@@ -1,5 +1,7 @@
 package com.formation.bibliotheque.controller;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -42,7 +44,7 @@ public class AuteurController {
 
     @Operation(summary = "Récupère une liste paginée de tous les auteurs.")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Liste paginée des auteurs")
+            @ApiResponse(responseCode = "200", description = "Liste paginée des auteurs")
     })
     @GetMapping
     public ResponseEntity<PagedModel<AuteurResponse>> listerTous(
@@ -51,12 +53,58 @@ public class AuteurController {
         return ResponseEntity.ok(AuteurMapper.versPage(page));
     }
 
-    
+    @Operation(summary = "Récupère un auteur par son ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Auteur trouvé"),
+            @ApiResponse(responseCode = "404", description = "Auteur inexistant")
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<AuteurResponse> obtenirParId(@PathVariable Long id) {
+        return auteurService.recupererParId(id)
+                .map(AuteurMapper::versResponse)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @Operation(summary = "Crée un nouvel auteur.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Auteur créé"),
+            @ApiResponse(responseCode = "400", description = "Données invalides")
+    })
+    @PostMapping
+    public ResponseEntity<AuteurResponse> creer(@Valid @RequestBody AuteurRequest request) {
+        Auteur entite = AuteurMapper.versEntite(request);
+        Auteur auteurCree = auteurService.creer(entite);
+        AuteurResponse response = AuteurMapper.versResponse(auteurCree);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
+    }
+
+    @Operation(summary = "Met à jour un auteur par son ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Auteur mis à jour"),
+            @ApiResponse(responseCode = "404", description = "Auteur inexistant"),
+            @ApiResponse(responseCode = "400", description = "Données invalides")
+    })
+    @PutMapping("/{id}")
+    public ResponseEntity<AuteurResponse> mettreAJour(@PathVariable Long id,
+            @Valid @RequestBody AuteurRequest request) {
+        Optional<Auteur> resultat = auteurService.recupererParId(id);
+        if (resultat.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Auteur auteurMisAJour = auteurService.mettreAJour(resultat.get(), AuteurMapper.versEntite(request));
+
+        return ResponseEntity.ok(AuteurMapper.versResponse(auteurMisAJour));
+    }
+
     @Operation(summary = "Supprime un auteur (impossible s'il a encore des livres)")
     @ApiResponses({
-        @ApiResponse(responseCode = "204", description = "Auteur supprimé"),
-        @ApiResponse(responseCode = "404", description = "Auteur inexistant"),
-        @ApiResponse(responseCode = "409", description = "L'auteur a encore des livres")
+            @ApiResponse(responseCode = "204", description = "Auteur supprimé"),
+            @ApiResponse(responseCode = "404", description = "Auteur inexistant"),
+            @ApiResponse(responseCode = "409", description = "L'auteur a encore des livres")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> supprimer(@PathVariable Long id) {
@@ -71,57 +119,10 @@ public class AuteurController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Récupère un auteur par son ID.")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Auteur trouvé"),
-        @ApiResponse(responseCode = "404", description = "Auteur inexistant")
-    })
-    @GetMapping("/{id}")
-    public ResponseEntity<AuteurResponse> obtenirParId(@PathVariable Long id) {
-        return auteurService.recupererParId(id)
-                .map(AuteurMapper::versResponse)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @Operation(summary = "Crée un nouvel auteur.")
-    @ApiResponses({
-        @ApiResponse(responseCode = "201", description = "Auteur créé"),
-        @ApiResponse(responseCode = "400", description = "Requête invalide")
-    })
-    @PostMapping
-    public ResponseEntity<AuteurResponse> creer(@Valid @RequestBody AuteurRequest request) {
-        Auteur entite = AuteurMapper.versEntite(request);
-        Auteur auteurCree = auteurService.creer(entite);
-        AuteurResponse response = AuteurMapper.versResponse(auteurCree);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
-    }
-
-    @Operation(summary = "Met à jour un auteur par son ID.")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Auteur mis à jour"),
-        @ApiResponse(responseCode = "404", description = "Auteur inexistant"),
-        @ApiResponse(responseCode = "400", description = "Requête invalide")
-    })
-    @PutMapping("/{id}")
-    public ResponseEntity<AuteurResponse> mettreAJour(@PathVariable Long id, @Valid @RequestBody AuteurRequest request) {
-        if (!auteurService.existe(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        Auteur entiteModifiee = AuteurMapper.versEntite(request);
-        return auteurService.recupererParId(id)
-                .map(auteur -> auteurService.mettreAJour(auteur, entiteModifiee))
-                .map(AuteurMapper::versResponse)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @Operation(summary = "Récupère une liste paginée des livres d'un auteur.")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Liste paginée des livres de l'auteur"),
-        @ApiResponse(responseCode = "404", description = "Auteur inexistant")
+            @ApiResponse(responseCode = "200", description = "Liste paginée des livres de l'auteur"),
+            @ApiResponse(responseCode = "404", description = "Auteur inexistant")
     })
     @GetMapping("/{id}/livres")
     public ResponseEntity<PagedModel<LivreResponse>> listerLivres(

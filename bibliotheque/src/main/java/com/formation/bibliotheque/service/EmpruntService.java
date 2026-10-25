@@ -16,7 +16,7 @@ import com.formation.bibliotheque.repository.LivreRepository;
 public class EmpruntService {
     /** Durée maximale d'un emprunt, en jours (RM5). */
     public static final int DUREE_MAX_JOURS = 14;
-    
+
     private final EmpruntRepository empruntRepository;
     private final LivreRepository livreRepository;
 
@@ -24,12 +24,12 @@ public class EmpruntService {
         this.empruntRepository = empruntRepository;
         this.livreRepository = livreRepository;
     }
-    
+
     public Page<Emprunt> recupererTous(Pageable pageable) {
         return empruntRepository.findAll(pageable);
     }
 
-    public Optional<Emprunt>recupererParId(Long id) {
+    public Optional<Emprunt> recupererParId(Long id) {
         return empruntRepository.findById(id);
     }
 

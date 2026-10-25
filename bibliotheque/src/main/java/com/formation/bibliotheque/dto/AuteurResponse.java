@@ -9,7 +9,7 @@ public class AuteurResponse {
     private final String prenom;
     private final String nationalite;
 
-    @JsonPropertyOrder({"id", "nom", "prenom", "nationalite"})
+    @JsonPropertyOrder({ "id", "nom", "prenom", "nationalite" })
     public AuteurResponse(Long id, String nom, String prenom, String nationalite) {
         this.id = id;
         this.nom = nom;
@@ -17,8 +17,19 @@ public class AuteurResponse {
         this.nationalite = nationalite;
     }
 
-    public Long getId() { return id; }
-    public String getNom() { return nom; }
-    public String getPrenom() { return prenom; }
-    public String getNationalite() { return nationalite; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getNationalite() {
+        return nationalite;
+    }
 }

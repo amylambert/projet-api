@@ -15,8 +15,10 @@ public class EmpruntResponse {
     private final Boolean rendu;
     private final Boolean enRetard;
 
-    @JsonPropertyOrder({"id", "livreId", "emprunteur", "dateEmprunt", "dateRetourPrevue", "dateRetourEffective", "rendu", "enRetard"})
-    public EmpruntResponse(Long id, Long livreId, String emprunteur, LocalDate dateEmprunt, LocalDate dateRetourPrevue, LocalDate dateRetourEffective, Boolean rendu, Boolean enRetard) {
+    @JsonPropertyOrder({ "id", "livreId", "emprunteur", "dateEmprunt", "dateRetourPrevue", "dateRetourEffective",
+            "rendu", "enRetard" })
+    public EmpruntResponse(Long id, Long livreId, String emprunteur, LocalDate dateEmprunt, LocalDate dateRetourPrevue,
+            LocalDate dateRetourEffective, Boolean rendu, Boolean enRetard) {
         this.id = id;
         this.livreId = livreId;
         this.emprunteur = emprunteur;
@@ -27,12 +29,35 @@ public class EmpruntResponse {
         this.enRetard = enRetard;
     }
 
-    public Long getId() { return id; }
-    public Long getLivreId() { return livreId; }
-    public String getEmprunteur() { return emprunteur; }
-    public LocalDate getDateEmprunt() { return dateEmprunt; }
-    public LocalDate getDateRetourPrevue() { return dateRetourPrevue; }
-    public LocalDate getDateRetourEffective() { return dateRetourEffective; }
-    public Boolean getRendu() { return rendu; }
-    public Boolean getEnRetard() { return enRetard; }
+    public Long getId() {
+        return id;
+    }
+
+    public Long getLivreId() {
+        return livreId;
+    }
+
+    public String getEmprunteur() {
+        return emprunteur;
+    }
+
+    public LocalDate getDateEmprunt() {
+        return dateEmprunt;
+    }
+
+    public LocalDate getDateRetourPrevue() {
+        return dateRetourPrevue;
+    }
+
+    public LocalDate getDateRetourEffective() {
+        return dateRetourEffective;
+    }
+
+    public Boolean getRendu() {
+        return rendu;
+    }
+
+    public Boolean getEnRetard() {
+        return enRetard;
+    }
 }

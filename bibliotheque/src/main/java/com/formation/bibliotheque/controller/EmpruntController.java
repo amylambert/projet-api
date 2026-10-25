@@ -40,7 +40,7 @@ public class EmpruntController {
 
     @Operation(summary = "Récupère une liste paginée de tous les emprunts.")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Liste paginée des emprunts")
+            @ApiResponse(responseCode = "200", description = "Liste paginée des emprunts")
     })
     @GetMapping
     public ResponseEntity<PagedModel<EmpruntResponse>> listerTous(
@@ -51,8 +51,8 @@ public class EmpruntController {
 
     @Operation(summary = "Récupère un emprunt par son ID.")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Emprunt trouvé"),
-        @ApiResponse(responseCode = "404", description = "Emprunt inexistant")
+            @ApiResponse(responseCode = "200", description = "Emprunt trouvé"),
+            @ApiResponse(responseCode = "404", description = "Emprunt inexistant")
     })
     @GetMapping("/{id}")
     public ResponseEntity<EmpruntResponse> obtenirParId(@PathVariable Long id) {
@@ -64,9 +64,9 @@ public class EmpruntController {
 
     @Operation(summary = "Crée un nouvel emprunt.")
     @ApiResponses({
-        @ApiResponse(responseCode = "201", description = "Emprunt créé"),
-        @ApiResponse(responseCode = "400", description = "Requête invalide"),
-        @ApiResponse(responseCode = "409", description = "Le livre n'est pas disponible")
+            @ApiResponse(responseCode = "201", description = "Emprunt créé"),
+            @ApiResponse(responseCode = "400", description = "Données invalides ou livre inexistant"),
+            @ApiResponse(responseCode = "409", description = "Le livre n'est pas disponible")
     })
 
     @PostMapping
@@ -75,7 +75,7 @@ public class EmpruntController {
             return ResponseEntity.badRequest().build();
         }
         if (!empruntService.livreDisponible(request.getLivreId())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build(); 
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
         Emprunt empruntCree = empruntService.creer(EmpruntMapper.versEntite(request));
@@ -84,34 +84,31 @@ public class EmpruntController {
                 .body(EmpruntMapper.versResponse(empruntCree));
     }
 
-    @Operation(summary = "Récupère un emprunt par son ID.")
+    @Operation(summary = "Enregistre le retour d'un emprunt.")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Emprunt trouvé"),
-        @ApiResponse(responseCode = "404", description = "Emprunt inexistant"),
-        @ApiResponse(responseCode = "409", description = "L'emprunt a déjà été retourné")
+            @ApiResponse(responseCode = "200", description = "Emprunt rendu"),
+            @ApiResponse(responseCode = "404", description = "Emprunt inexistant"),
+            @ApiResponse(responseCode = "409", description = "L'emprunt a déjà été retourné")
     })
     @PatchMapping("/{id}/retour")
     public ResponseEntity<EmpruntResponse> retourner(@PathVariable Long id) {
-
         Optional<Emprunt> optionalEmprunt = empruntService.recupererParId(id);
-
         if (optionalEmprunt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
         Emprunt emprunt = optionalEmprunt.get();
         if (emprunt.getRendu()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        return empruntService.recupererParId(id).map(empruntService::retourner)
-                .map(EmpruntMapper::versResponse)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+
+        Emprunt empruntRendu = empruntService.retourner(emprunt);
+
+        return ResponseEntity.ok(EmpruntMapper.versResponse(empruntRendu));
     }
 
     @Operation(summary = "Récupère une liste paginée des emprunts en cours.")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Liste paginée des emprunts en cours")
+            @ApiResponse(responseCode = "200", description = "Liste paginée des emprunts en cours")
     })
     @GetMapping("/en-cours")
     public ResponseEntity<PagedModel<EmpruntResponse>> listerEnCours(
@@ -122,7 +119,7 @@ public class EmpruntController {
 
     @Operation(summary = "Récupère une liste paginée des emprunts en retard.")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Liste paginée des emprunts en retard")
+            @ApiResponse(responseCode = "200", description = "Liste paginée des emprunts en retard")
     })
     @GetMapping("/en-retard")
     public ResponseEntity<PagedModel<EmpruntResponse>> listerEnRetard(

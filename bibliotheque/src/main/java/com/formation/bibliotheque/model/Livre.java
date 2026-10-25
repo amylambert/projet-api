@@ -1,6 +1,11 @@
 package com.formation.bibliotheque.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "livres")
@@ -27,11 +32,13 @@ public class Livre {
     private Long auteurId;
 
     public Livre() {
+        // Constructeur par défaut requis par JPA
     }
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -39,6 +46,7 @@ public class Livre {
     public String getTitre() {
         return titre;
     }
+
     public void setTitre(String titre) {
         this.titre = titre;
     }
@@ -46,6 +54,7 @@ public class Livre {
     public String getIsbn() {
         return isbn;
     }
+
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
@@ -53,6 +62,7 @@ public class Livre {
     public Double getPrix() {
         return prix;
     }
+
     public void setPrix(Double prix) {
         this.prix = prix;
     }
@@ -60,6 +70,7 @@ public class Livre {
     public Integer getAnneePublication() {
         return anneePublication;
     }
+
     public void setAnneePublication(Integer anneePublication) {
         this.anneePublication = anneePublication;
     }
@@ -67,6 +78,7 @@ public class Livre {
     public Integer getStock() {
         return stock;
     }
+
     public void setStock(Integer stock) {
         this.stock = stock;
     }
@@ -74,6 +86,7 @@ public class Livre {
     public Long getAuteurId() {
         return auteurId;
     }
+
     public void setAuteurId(Long auteurId) {
         this.auteurId = auteurId;
     }

@@ -22,32 +22,34 @@ public class AuteurService {
     }
 
     /**
-    * Retourne tous les auteurs.
-    */
-    public Page<Auteur> recupererTous(Pageable pageable){
+     * Retourne tous les auteurs.
+     */
+    public Page<Auteur> recupererTous(Pageable pageable) {
         return auteurRepository.findAll(pageable);
     }
 
     /**
-    * Retourne un auteur par son ID.
-    * @return Optional vide si le auteur n'existe pas.
-    */
+     * Retourne un auteur par son ID.
+     * 
+     * @return Optional vide si le auteur n'existe pas.
+     */
     public Optional<Auteur> recupererParId(Long id) {
         return auteurRepository.findById(id);
     }
 
     /**
-    * @return True si l'id correspond à un auteur dans la table
-    */
+     * @return True si l'id correspond à un auteur dans la table
+     */
     public boolean existe(Long id) {
         return auteurRepository.existsById(id);
     }
 
     /**
-    * Crée un nouveau auteur.
-    * @param auteur L'auteur à créer (sans ID).
-    * @return L'auteur créé (avec ID généré).
-    */ 
+     * Crée un nouveau auteur.
+     * 
+     * @param auteur L'auteur à créer (sans ID).
+     * @return L'auteur créé (avec ID généré).
+     */
     public Auteur creer(Auteur auteur) {
         // On s'assure que l'ID est null pour forcer une création (pas une mise à jour)
         auteur.setId(null);
@@ -55,10 +57,11 @@ public class AuteurService {
     }
 
     /**
-    * Met à jour un auteur existant.
-    * @param nouvellesValeurs Les nouvelles valeurs.
-    * @return L'auteur mis à jour.
-    */
+     * Met à jour un auteur existant.
+     * 
+     * @param nouvellesValeurs Les nouvelles valeurs.
+     * @return L'auteur mis à jour.
+     */
     public Auteur mettreAJour(Auteur auteurExistant, Auteur nouvellesValeurs) {
         auteurExistant.setNom(nouvellesValeurs.getNom());
         auteurExistant.setPrenom(nouvellesValeurs.getPrenom());
@@ -67,24 +70,26 @@ public class AuteurService {
     }
 
     /**
-    * Vérifie si un auteur a écrit des livres
-    * @return un boolean
-    */
+     * Vérifie si un auteur a écrit des livres
+     * 
+     * @return un boolean
+     */
     public boolean aDesLivres(Long id) {
         return livreRepository.existsByAuteurId(id);
     }
 
     /**
-    * Supprime un auteur par son ID.
-    */
+     * Supprime un auteur par son ID.
+     */
     public void supprimer(Long id) {
         auteurRepository.deleteById(id);
     }
 
     /**
-    * Récupère les livres d'un auteur par son ID.
-    * @param id L'ID de l'auteur.
-    */
+     * Récupère les livres d'un auteur par son ID.
+     * 
+     * @param id L'ID de l'auteur.
+     */
     public Page<Livre> recupererLivres(Long id, Pageable pageable) {
         return livreRepository.findByAuteurId(id, pageable);
     }
