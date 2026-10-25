@@ -75,12 +75,13 @@ public class EmpruntController {
             return ResponseEntity.badRequest().build();
         }
         if (!empruntService.livreDisponible(request.getLivreId())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build(); 
         }
 
         Emprunt empruntCree = empruntService.creer(EmpruntMapper.versEntite(request));
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(EmpruntMapper.versResponse(empruntCree));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(EmpruntMapper.versResponse(empruntCree));
     }
 
     @Operation(summary = "Récupère un emprunt par son ID.")
