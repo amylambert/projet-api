@@ -68,7 +68,6 @@ public class EmpruntController {
             @ApiResponse(responseCode = "400", description = "Données invalides ou livre inexistant"),
             @ApiResponse(responseCode = "409", description = "Le livre n'est pas disponible")
     })
-
     @PostMapping
     public ResponseEntity<EmpruntResponse> creer(@Valid @RequestBody EmpruntRequest request) {
         if (!empruntService.livreExiste(request.getLivreId())) {

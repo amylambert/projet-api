@@ -16,18 +16,18 @@ public class LivreRequest {
     @Size(max = 20, message = "L'ISBN ne doit pas dépasser 20 caractères")
     private String isbn;
 
-    @Positive(message = "L'année de publication doit être positive")
-    private Integer anneePublication;
-
     @NotNull(message = "Le prix est obligatoire")
     @Positive(message = "Le prix doit être positif")
     private Double prix;
 
+    @Positive(message = "L'année de publication doit être positive")
+    private Integer anneePublication;
+
     @NotNull(message = "Le stock est obligatoire")
-    @PositiveOrZero(message = "Le stock ne peut pas être négatif") // Trouvé sur internet
+    @PositiveOrZero(message = "Le stock ne peut pas être négatif")
     private Integer stock;
 
-    @NotNull(message = "L'id de l'auteur est obligatoire")
+    @NotNull(message = "L'identifiant de l'auteur est obligatoire")
     private Long auteurId;
 
     public LivreRequest() {
@@ -52,20 +52,20 @@ public class LivreRequest {
         this.isbn = isbn;
     }
 
-    public int getAnneePublication() {
-        return anneePublication;
-    }
-
-    public void setAnneePublication(int anneePublication) {
-        this.anneePublication = anneePublication;
-    }
-
     public Double getPrix() {
         return prix;
     }
 
     public void setPrix(Double prix) {
         this.prix = prix;
+    }
+
+    public Integer getAnneePublication() {
+        return anneePublication;
+    }
+
+    public void setAnneePublication(Integer anneePublication) {
+        this.anneePublication = anneePublication;
     }
 
     public Integer getStock() {

@@ -59,6 +59,7 @@ public class AuteurService {
     /**
      * Met à jour un auteur existant.
      * 
+     * @param auteurExistant   L'auteur à modifier.
      * @param nouvellesValeurs Les nouvelles valeurs.
      * @return L'auteur mis à jour.
      */

@@ -2,6 +2,7 @@ package com.formation.bibliotheque.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder({ "id", "nom", "prenom", "nationalite" })
 public class AuteurResponse {
 
     private final Long id;
@@ -9,7 +10,6 @@ public class AuteurResponse {
     private final String prenom;
     private final String nationalite;
 
-    @JsonPropertyOrder({ "id", "nom", "prenom", "nationalite" })
     public AuteurResponse(Long id, String nom, String prenom, String nationalite) {
         this.id = id;
         this.nom = nom;

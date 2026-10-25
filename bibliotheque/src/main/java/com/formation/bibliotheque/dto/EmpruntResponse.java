@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder({ "id", "livreId", "emprunteur", "dateEmprunt", "dateRetourPrevue", "dateRetourEffective",
+        "rendu", "enRetard" })
 public class EmpruntResponse {
 
     private final Long id;
@@ -15,8 +17,6 @@ public class EmpruntResponse {
     private final Boolean rendu;
     private final Boolean enRetard;
 
-    @JsonPropertyOrder({ "id", "livreId", "emprunteur", "dateEmprunt", "dateRetourPrevue", "dateRetourEffective",
-            "rendu", "enRetard" })
     public EmpruntResponse(Long id, Long livreId, String emprunteur, LocalDate dateEmprunt, LocalDate dateRetourPrevue,
             LocalDate dateRetourEffective, Boolean rendu, Boolean enRetard) {
         this.id = id;
